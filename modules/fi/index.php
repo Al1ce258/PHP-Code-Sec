@@ -27,7 +27,7 @@ $page = $_GET['page'] ?? 'home';
         // 演示：RFI 需 allow_url_include=On（在现代PHP默认关闭），否则此处只能 LFI。
         // 直接拼接，存在路径遍历与远程包含风险
         $path = $page;
-        if (strpos($path, 'http://') === 0 || strpos($path, 'https://') === 0) {
+        if (strpos($path, '://') !== false) {
             @include $path;
         } else {
             @include __DIR__ . '/../../pages/' . $path . '.php';
