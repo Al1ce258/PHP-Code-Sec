@@ -1,6 +1,13 @@
 <?php require_once __DIR__ . '/../../core/init.php'; ?>
 <?php
 $info = '';$msg='';
+class TestPhar {
+    public function __destruct() {
+        // 安全的演示操作，避免恶意利用
+        echo "<p>PHAR反序列化触发成功！</p>";
+       
+    }
+}
 if (isset($_GET['path'])) {
     // 演示：调用 getimagesize 对用户可控路径（可能 phar://），触发PHAR元数据反序列化
     $path = $_GET['path'];
