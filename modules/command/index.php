@@ -6,6 +6,11 @@ if (isset($_GET['host'])) {
     $host = $_GET['host'];
     $cmd = 'ping -n 1 ' . $host; // Windows -n 1
     $output = shell_exec($cmd);
+      if (stristr(PHP_OS, 'WIN')) {
+        // 将 GBK 编码转换为 UTF-8 编码
+        // 使用 //IGNORE 参数忽略无法转换的字符，避免报错
+        $output = iconv('GBK', 'UTF-8//IGNORE', $output);
+    }
 }
 ?>
 <!DOCTYPE html>
@@ -26,7 +31,7 @@ if (isset($_GET['host'])) {
       </form>
     </div>
     <?php if($output): ?>
-    <div class="panel"><h3>输出</h3><pre><?php echo h($output); ?></pre></div>
+    <div class="panel"><h3>输出</h3> <pre><?php echo htmlspecialchars($output); ?></pre></div>
     <?php endif; ?>
     <div class="panel explain">
       <h3>原理解析</h3>
